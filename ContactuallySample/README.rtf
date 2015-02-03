@@ -1,0 +1,153 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1344\cocoasubrtf720
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww9000\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\fs24 \cf0 \
+\
+
+\b App Goal
+\b0 \
+Create an iOS app that retrieves and displays a list of buckets using the Contactually API (http://developers.contactually.com). When the user taps on a bucket, display a list of contacts associated with that bucket.\
+\
+
+\b Caveats
+\b0 \
+My goal was to use the API Key for authentication and allow the user to obtain the key via a Web View (copy/paste).\
+On the simulator this works well.  On a device I sometimes had trouble interacting with the Contactually web site during \
+login. Occasionally simply placing the cursor in the e-mail field in the popup dialog for login would submit the form \
+and bring up the Forgot your password form.\
+\
+Upon a successful login to the Contactually web site, it was sometimes difficult to select the API key for copying on the \
+device.\
+\
+As an alternative to manually getting the API Key from the web site, for testing purposes I allow the API key to be\
+hardcoded in EnterApiKeyController.m.    See NSString *const ApiKey = @"replace_with_your_api_key";    \
+I've included a button on the App login screen to use this value.\
+\
+\
+
+\b Authentication Overview
+\b0 \
+We use an API key for authentication with Contactually.   Upon first use, or after a logout, the EnterApiKeyController is presented modally\
+to allow the user to enter the API key.    A button is present on that controller to allow the user to segue to \
+DisplayApiKeyController where a UIWebView loads the following page at Contactually:\
+https://www.contactually.com/settings/integrations\
+\
+The user can copy the key, dismiss the UIWebView, and enter the API Key.   The key is validated with a call\
+to groupings.json and type="bucket" to get the buckets list.\
+\
+Upon validation we use KeyChainHelper.m to store the API key to the iOS Keychain (credits for this code in KeyChainHelper.h).\
+We use the Keychain in place of NSUserDefaults for better security.\
+\
+After storing the key EnterApiKeyController calls its delegate to dismiss itself and cause the buckets to be loaded to Core Data\
+and the Table View to be updated using NSFetchedResultsController (see dismissEnterApiKeyController method in MasterViewController.m).\
+\
+\
+
+\b Core Data
+\b0  \
+We use Core Data as  local cache of records from Contactually.  The user can manually reload all records with a button in the navigation\
+toolbar.\
+\
+When we reload from Contactually, we first remove all records from Core Data.   To do this quickly, we remove and then add\
+the Persistent Store (rather than deleting individual objects).  This method however requires us to be sure to set the\
+NSFetchedResultsController reference to nil in both Master and Detail controllers.\
+\
+Keeping a strong reference to the Detail controller must be handled carefully though.  It can only be initially set in\
+viewDidLoad of MasterViewController (see comments there) and must be updated in prepareForSegue since a new\
+DetailViewController is instanced with the replace segue used.\
+\
+The Bucket Entity has an attribute contactsLoaded that lets us know whether contacts have been previously\
+fetched for a particular bucket selection.\
+\
+\
+
+\b NSURLSession
+\b0 \
+Using NSURLSession instead of NSURLConnection (see ContactuallyConnection.m)\
+An interesting piece to this was being sure to use ephemeralSessionConfiguration to require API key on each access.\
+\
+\
+
+\b Universal App
+\b0 \
+Using Universal Storyboard supported by iOS 8 to provide a Universal app.\
+\
+\
+
+\b Project header
+\b0 \
+Project.h, Project.m and Global.h are files I use for some custom logging and error reporting. \
+I wrote an article about this at\
+http://finalize.com/2014/10/20/logging-and-bookmarks-with-objective-c-and-swift/\
+\
+\
+
+\b Error handling
+\b0 \
+Currently only reporting errors (not performing retries, etc.) and calling abort().\
+\
+When getting an error from Contactually API, we do not currently try to distinguish the type of error\
+(not authenticated, bad request, etc) and just make an assumption that there was an \
+authentication error - forcing user to re-enter API key.\
+\
+\
+
+\b Logout
+\b0 \
+On a logout we empty Core Data, remove the API Key from the Keychain and present the EnterApiKeyController again to the user\
+to submit a new key.\
+\
+\
+
+\b Reload
+\b0 \
+On a reload, we empty Core Data and fetch results again from Contactually.\
+\
+We do handle the case where the user may have reset their API key on the web site just prior to a reload.\
+Here we would alert the user and force a logout\
+\
+\
+
+\b TableViewController.m
+\b0 \
+Both the Master and Detail View Controllers are of type UITableViewController, so we share some code\
+in the base class TableViewController.m.\
+\
+The subclasses are expected to initialize some inherited properties, override configureCell:atIndexPath: etc.\
+\
+\
+
+\b Dynamic Type Support
+\b0 \
+\
+Support for self sizing table cells is setup in viewDidLoad method of Master and Detail View Controllers.\
+\
+Support for Dynamic Type is provided for both Master and Detail View Controllers:\
+-  with an observer for the notification UIContentSizeCategoryDidChangeNotification.\
+-  by setting cell.textLabel.font in configureCell:atIndexPath:\
+\
+\
+
+\b Debug
+\b0 \
+\
+I've included the macro PLOG_TOP("Got response=%@  error=%@  status code=%ld  jsonDict=%@ ...\
+\
+in ContactuallyConnection.m,  getContactually:params:completionBlock:\
+\
+to watch for server responses from Contactually.     You should see a response for the first fetch of buckets\
+after a login, and for the first fetch of contacts for a bucket.   Subsequent invocations of the app, or selection\
+of a bucket will pull data from the Core Data cache (with not server response logged).\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+}

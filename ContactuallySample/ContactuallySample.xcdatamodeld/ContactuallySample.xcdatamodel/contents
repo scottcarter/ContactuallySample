@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6254" systemVersion="14C109" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Bucket" representedClassName="Bucket">
+        <attribute name="contactsLoaded" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="contact" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Contact" inverseName="bucket" inverseEntity="Contact" syncable="YES"/>
+        <userInfo/>
+    </entity>
+    <entity name="Contact" representedClassName="Contact" syncable="YES">
+        <attribute name="first_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="last_name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="bucket" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Bucket" inverseName="contact" inverseEntity="Bucket" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Bucket" positionX="261" positionY="189" width="128" height="103"/>
+        <element name="Contact" positionX="261" positionY="387" width="128" height="103"/>
+    </elements>
+</model>
