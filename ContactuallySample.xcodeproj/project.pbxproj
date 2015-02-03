@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A7280C381A80734B0020F999 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = A7280C371A80734B0020F999 /* README.md */; };
 		A75D8A851A80554500F5661F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A75D8A841A80554500F5661F /* main.m */; };
 		A75D8A881A80554500F5661F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A75D8A871A80554500F5661F /* AppDelegate.m */; };
 		A75D8A8B1A80554500F5661F /* ContactuallySample.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A75D8A891A80554500F5661F /* ContactuallySample.xcdatamodeld */; };
@@ -40,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A7280C371A80734B0020F999 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		A75D8A7F1A80554500F5661F /* ContactuallySample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ContactuallySample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A75D8A831A80554500F5661F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A75D8A841A80554500F5661F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				A75D8A921A80554500F5661F /* Main.storyboard */,
+				A7280C371A80734B0020F999 /* README.md */,
 				A75D8AB31A80566200F5661F /* Core Data */,
 				A75D8AB41A80567000F5661F /* Documentation */,
 				A75D8AB51A80568400F5661F /* Main */,
@@ -341,6 +344,7 @@
 				A75D8AD21A80581D00F5661F /* EnterApiKeyController.m in Sources */,
 				A75D8A8B1A80554500F5661F /* ContactuallySample.xcdatamodeld in Sources */,
 				A75D8AD81A80583200F5661F /* TableViewController.m in Sources */,
+				A7280C381A80734B0020F999 /* README.md in Sources */,
 				A75D8ADB1A80587C00F5661F /* ContactuallyConnection.m in Sources */,
 				A75D8AC11A80570A00F5661F /* Bucket.m in Sources */,
 				A75D8A851A80554500F5661F /* main.m in Sources */,
@@ -544,6 +548,7 @@
 				A75D8AAA1A80554500F5661F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A75D8AAB1A80554500F5661F /* Build configuration list for PBXNativeTarget "ContactuallySampleTests" */ = {
 			isa = XCConfigurationList;
@@ -552,6 +557,7 @@
 				A75D8AAD1A80554500F5661F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
